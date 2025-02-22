@@ -13,6 +13,10 @@ public class AccountService {
         this.accountDAO = accountDAO;
     }
     public Account addAccount(Account account) {
+        // check for no username or less than 4 password length
+        if (account.getUsername().length() == 0 || account.getPassword().length() < 4) {
+            return null;
+        }
         return accountDAO.insertAccount(account);
     }
 }

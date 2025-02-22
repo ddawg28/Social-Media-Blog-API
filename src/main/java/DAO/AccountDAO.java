@@ -10,7 +10,7 @@ public class AccountDAO {
         try {
             Connection conn = ConnectionUtil.getConnection();
             String sql = "INSERT INTO account (username, password) VALUES (?, ?)";
-            PreparedStatement ps = conn.prepareStatement(sql);
+            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setString(1, account.getUsername());
             ps.setString(2, account.getPassword());
             ps.executeUpdate();
