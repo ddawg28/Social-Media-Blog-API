@@ -46,5 +46,21 @@ public class AccountDAO {
         }
         return null;
     }
+
+    public boolean checkExistsAccountById(int account_id) {
+        try {
+            Connection conn = ConnectionUtil.getConnection();
+            String sql = "SELECT * FROM account WHERE account_id = ?";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ps.setInt(1, account_id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return false;
+    }
     
 }

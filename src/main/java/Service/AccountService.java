@@ -14,9 +14,11 @@ public class AccountService {
     }
     public Account addAccount(Account account) {
         // check for no username or less than 4 password length
-
-        // *** TODO **** check if username exists first after implementing GET call
         if (account.getUsername().length() == 0 || account.getPassword().length() < 4) {
+            return null;
+        }
+        // check if account exists
+        if (getAccount(account) != null) {
             return null;
         }
         return accountDAO.insertAccount(account);
