@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import Model.Account;
 import Model.Message;
 import Service.*;
+import java.util.*;
 
 
 /**
@@ -35,6 +36,7 @@ public class SocialMediaController {
         app.post("/register", this::postAccountHandler);
         app.post("/login", this::loginAccountHandler);
         app.post("/messages", this::postMessageHandler);
+        app.get("/messages", this::getMessagesHandler);
 
         return app;
     }
@@ -78,5 +80,9 @@ public class SocialMediaController {
         } else {
             ctx.status(400);
         }
+    }
+
+    private void getMessagesHandler(Context ctx) {
+        ctx.json(messageService.getAllMessages());
     }
 }

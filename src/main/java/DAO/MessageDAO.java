@@ -6,6 +6,7 @@ import org.h2.command.Prepared;
 
 import Model.Message;
 import Util.ConnectionUtil;
+import java.util.*;
 
 public class MessageDAO {
     
@@ -27,5 +28,21 @@ public class MessageDAO {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    public List<Message> getAllMessages() {
+        List<Message> result = new ArrayList<Message>();
+        try {
+            Connection conn = ConnectionUtil.getConnection();
+            String sql = "SELECT * FROM message";
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result.add(new Message(rs.getInt("message_id"), rs.getInt("posted_by"), rs.getString("message_text"), rs.getLong("time_posted_epoch")));
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return result;
     }
 }
