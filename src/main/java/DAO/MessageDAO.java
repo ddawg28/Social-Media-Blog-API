@@ -80,7 +80,7 @@ public class MessageDAO {
         return null;
     }
 
-    public Message updateMessageById(int message_id, String message_text) {
+    public boolean updateMessageById(int message_id, String message_text) {
         try {
             Connection conn = ConnectionUtil.getConnection();
             String sql = "UPDATE message SET message_text = ?, time_posted_epoch = ? WHERE message_id = ?";
@@ -89,9 +89,10 @@ public class MessageDAO {
             ps.setLong(2, System.currentTimeMillis());
             ps.setInt(3, message_id);
             ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-        return null;
+        return false;
     }
 }

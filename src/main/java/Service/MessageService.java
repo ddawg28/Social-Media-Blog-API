@@ -49,15 +49,21 @@ public class MessageService {
     }
 
     public Message updateMessageById(int message_id, String message_text) {
+        Message check = messageDAO.getMessageById(message_id);
         if (message_text.isBlank()) {
             return null;
         }
         if (message_text.length() > 255) {
             return null;
         }
-        if (messageDAO.getMessageById(message_id) == null) {
+        // if message does not exist
+        if (check == null) {
             return null;
         }
-        return messageDAO.updateMessageById(message_id, message_text);
+        if (messageDAO.updateMessageById(message_id, message_text)) {
+            check.setMessage_text(message_text);
+            return check;
+        }
+        return null;
     }
 }
